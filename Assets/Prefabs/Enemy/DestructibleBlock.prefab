@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2070666298504327267}
   - component: {fileID: 7196354425993665729}
   - component: {fileID: 8972062168918940827}
+  - component: {fileID: 5392107246807985313}
   m_Layer: 7
   m_Name: DestructibleBlock
   m_TagString: Untagged
@@ -49,7 +50,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211d884500ec0974f9147e7b1a920647, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Health: 100
   m_DamageModifier: {fileID: 8555105487441685645}
   m_source: {fileID: 2070666298504327267}
   m_onHit: {fileID: 8300000, guid: 2b17131905cd6a5459d97086b7b3bb9c, type: 3}
@@ -193,6 +193,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &5392107246807985313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633698495964129976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5964f5f2181a0e49be2577d4ea7650c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health:
+    value: 1000
+  OnStatsUpdate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &633698497178894489
 GameObject:
   m_ObjectHideFlags: 0

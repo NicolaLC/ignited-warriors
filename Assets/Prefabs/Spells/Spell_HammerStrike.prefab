@@ -51,7 +51,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
-  applyAfter: 1
+  applyAfter: 1.1
   repeatAfter: 0
   damage: 100
   damageRadius: 5

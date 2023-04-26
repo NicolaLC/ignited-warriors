@@ -1,35 +1,43 @@
+using System;
 using System.Collections;
 using Effects;
+using ReflectionSystem;
 using UnityEngine;
 
 namespace Common
 {
+    [RequireComponent(typeof(StatsController))]
     public class HealthController : MonoBehaviour
     {
-        [SerializeField] private float m_Health = 100f;
         [SerializeField] private ShaderModifier m_DamageModifier = null;
         [SerializeField] private AudioSource m_source = null;
         [SerializeField] private AudioClip m_onHit = null;
         [SerializeField] private AudioClip m_onDestroy = null;
         [SerializeField] private GameObject m_Graphics = null;
 
-        private float m_CurrentHealth = 100f;
+        private StatsController m_StatsController = null;
 
-        protected void Awake()
+        private void Awake()
         {
-            m_CurrentHealth = m_Health;
+            m_StatsController = GetComponent<StatsController>();
+            m_StatsController.OnStatsUpdate.AddListener(OnHealthUpdate);
         }
 
-        public void ApplyDamage(float i_Amount)
+        public void OnHealthUpdate(EStatPropertyName i_UpdatedProperty)
         {
-            m_CurrentHealth = Mathf.Max(0, m_CurrentHealth - i_Amount);
-            if (m_CurrentHealth <= 0)
+            if (i_UpdatedProperty != EStatPropertyName.Health)
+            {
+                return;
+            }
+            
+            StatProperty<int> Health = m_StatsController.GetProperty<int>(EStatPropertyName.Health);
+            
+            if (Health.GetValue() <= 0)
             {
                 StartCoroutine(Die());
                 return;
             }
 
-            print($"[{transform.name}] New health {m_CurrentHealth}");
             m_source.PlayOneShot(m_onHit);
             m_DamageModifier.Apply();
         }

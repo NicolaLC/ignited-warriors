@@ -1,11 +1,12 @@
 ﻿using Common;
+using ReflectionSystem;
 using UnityEngine;
 
 namespace Spells
 {
     public class AOESpell : Spell
     {
-        public float damage = 25f;
+        public int damage = 25;
         public float damageRadius = 10f;
         [field: HideInInspector] public ESpellType Type { get; } = ESpellType.AOE;
 
@@ -16,7 +17,19 @@ namespace Spells
             // Loop through the colliders and print their names
             foreach (Collider collider in colliders)
             {
-                collider.transform.gameObject.GetComponent<HealthController>()?.ApplyDamage(damage);
+                StatsController sc = collider.transform.gameObject.GetComponent<StatsController>();
+                if (!sc)
+                {
+                    continue;
+                }
+
+                StatProperty<int> Health = sc.GetProperty<int>(EStatPropertyName.Health);
+                if (Health == null)
+                {
+                    return;
+                }
+                
+                sc.SetProperty<int>(EStatPropertyName.Health, Health.GetValue() - damage);
             }
         }
 
